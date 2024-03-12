@@ -305,3 +305,19 @@ insert into job_history values
 (176, '1998-04-24', '1998-12-31', 'SA_REP', 80),
 (176, '1999-01-01', '1999-12-31', 'SA_MAN', 80),
 (200, '1994-07-01', '1998-12-31', 'AC_ACCOUNT', 90);
+-- Creating job_grades table
+create table job_grades
+(
+    grade_level varchar(2) primary key,
+    lowest_sal int,
+    highest_sal int,
+);
+-- Inserting records to job_grades
+insert into job_grades values
+('E',30000,40000), --Entry level
+('M',45000,60000), --Mid level
+('S',70000,90000), --Senior level
+('EX',100000,150000), --Executive level
+('MG',60000,80000), --Managerial level
+('SP',50000,70000), --Specialist level
+('AS',35000,50000); --Associate level
