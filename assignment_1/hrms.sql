@@ -310,7 +310,7 @@ create table job_grades
 (
     grade_level varchar(2) primary key,
     lowest_sal int,
-    highest_sal int,
+    highest_sal int
 );
 -- Inserting records to job_grades
 insert into job_grades values
