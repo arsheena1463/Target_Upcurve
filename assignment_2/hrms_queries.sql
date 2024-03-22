@@ -126,3 +126,54 @@ insert into job_grades values
      from employees
      where salary>(select AVG(salary) from employees)
      order by salary ASC;
+/* 21. Write a query that displays the employee number and lastname of all employees who
+ work in a department with any employee whose lastname contains a "u". */
+     select employee_id,lastname,department_id
+     from employees
+     where department_id IN (select department_id from employees where lastname like '%u%')
+     order by department_id;
+/* 22. Display the lastname, department number, and job id of all employees whose
+ department location id is 1700. */
+     select lastname,e.department_id,job_id
+     from employees e,departments d 
+     where e.department_id=d.department_id 
+     AND location_id=1700;
+/* 23. Display the lastname and salary of every employee who reports to "King". */
+     select lastname,salary
+     from employees 
+     where manager_id IN (select employee_id from employees where lastname='King');
+/*24. Display the department number, lastname, and job id for every employee in the
+ "Executive" department. */
+     select e.department_id,lastname,job_id 
+     from employees e JOIN departments d
+     ON  e.department_id=d.department_id
+     where d.department_name='Executive';
+/* 25. Display the employee number, lastname, and salary of all employees who earn more
+ than the average salary and who work in a department with any employee with a "u"
+ in their lastname. */
+     select employee_id,lastname,salary
+     from employees
+     where department_id IN (select department_id from employees where lastname like '%u%')
+     AND salary>(select AVG(salary) from employees);
+/* 26. Write a query to get unique department ID from employee table. */
+     select distinct department_id 
+     from employees
+     where department_id IS NOT NULL;
+/* 27. Write a query to get all employee details from the employee table order by rst
+ name, descending */
+     select *from employees
+     order by firstname DESC;
+/* 28. Write a query to get the names ( rst_name, last_name), salary, PF of all the
+ employees (PF is calculated as 15% of salary). */
+     select CONCAT_WS(' ',firstname,lastname) as 'name',salary,(0.15*salary) as 'PF'
+     from employees;
+/*29. Write a query to get the employee ID, names ( rst_name, last_name), salary in
+ ascending order of salary. */
+     select employee_id, CONCAT_WS(' ',firstname,lastname) as 'name',salary
+     from employees
+     order by salary;
+/* 30. Write a query to get the total salaries payable to employees. */
+     select SUM(salary) as 'Total Salaries Payable'
+     from employees;
+/* 31. Write a query to get the maximum and minimum salary from employees table. */
+     select MAX(salary),MIN(salary) from employees;
