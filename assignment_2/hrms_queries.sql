@@ -67,3 +67,62 @@ insert into job_grades values
      from employees
      where hire_date>(select hire_date from employees where lastname='Davies')
      order by hire_date;
+/*11. Display the names and hire dates for all employees who were hired before their
+ managers, along with their manager's names and hiredates. Label the columns
+ "Employee", "Emp hired", "Manager", and "Manager hired" respectively. */
+     select CONCAT_WS(' ',e1.firstname,e1.lastname) as "Employee",e1.hire_date as "Emp hired",CONCAT_WS(' ',e2.firstname,e2.lastname) as "Manager",e2.hire_date as"Manager hired"
+     from employees e1 JOIN employees e2 
+     ON e1.manager_id=e2.employee_id
+     where e1.hire_date<e2.hire_date;
+/*12. Display the highest, lowest, sum and average salary of all employees. Label the
+ columns "Maximum", "Minimum", "Sum", and "Average" respectively. */
+     select MAX(salary) as 'Maximum',MIN(salary) as 'Minimum',SUM(salary) as 'Sum',AVG(salary) as 'Average'
+     from employees;
+/*13. Modify the above query to display the same data for each job type. */
+     select job_id,MAX(salary) as 'Maximum',MIN(salary) as 'Minimum',SUM(salary) as 'Sum',AVG(salary) as 'Average'
+     from employees
+     group by job_id;
+/* 14. Write a query to display the number of people with the same job. */
+     select job_id, COUNT(job_id)
+     from employees
+     group by job_id;
+/*15. Determine the number of managers without listing them. Label the column "Number
+ of Managers". [Hint: use the MANAGER_ID column to determine the number of
+ managers] */
+     select COUNT(distinct manager_id) as 'Number of Managers'
+     from employees;
+/*16. Write a query that displays the di erence between the highest and the lowes salaries.
+ Label the column as "Di erence". */
+     select (MAX(salary)-MIN(salary)) as 'Difference'
+     from employees;
+/* 17. Display the manager number and the salary of the lowest paid employee for that
+ manager. Exclude anyone whose manager is not known. Exclude any group where
+ the minimum salary is less than $6000. Sort the output in descending order of salary. */
+     select e2.employee_id as 'Manager ID',MIN(e1.salary) as 'Lowest Salary'
+     from employees e1 JOIN employees e2 
+     ON  e1.manager_id=e2.employee_id
+     group by e2.employee_id       --CAN'T USE WHERE HERE!!!!! GROUP BY IS ALWAYS FOLLOWED BY HAVING NOT WHERE!!
+     having MIN(e1.salary)>=6000   --CAN'T USE ALIAS HERE
+     order by MIN(e1.salary) DESC; --CAN'T USE ALIAS HERE
+/* 18. Write a query to display each department's name, location, number of employees,
+ and the average salary for all employees in that department. Label the columns
+ "Name", "Location", "No.of people", and "SAlary" respectively. Round the average
+ salary to two decimal places. */
+     select department_name as 'Name',CONCAT_WS(',',city,state_province) as 'Location',COUNT(employee_id) as 'No. of people',ROUND(AVG(salary),2) as 'Salary'
+     from departments d LEFT JOIN employees e
+     ON d.department_id=e.department_id
+     JOIN locations l
+     ON d.location_id=l.location_id
+     group by Name,Location;
+/* 19. Write a query to display the lastname, and hiredate of any employee in the
+ department as the employee "Zlotkey". Exclude "Zlotkey". */
+     select lastname,hire_date 
+     from employees 
+     where department_id=(select department_id from employees where lastname='Zlotkey')
+     AND lastname NOT LIKE 'Zlotkey';
+/* 20. Create a query to display the employee numbers and lastnames of all employees
+ who earn more than the average salary. Sort the result in ascending order of salary */
+     select employee_id,lastname
+     from employees
+     where salary>(select AVG(salary) from employees)
+     order by salary ASC;
