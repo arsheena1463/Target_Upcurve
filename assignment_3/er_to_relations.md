@@ -1,12 +1,12 @@
- # Transforming ER diagram into appropriate relations
- ## Entities
-    - Category
-    - Product
-    - Picture
-    - Customer
-    - Order
-    - Coupon
-    - Rating
+# Transforming ER diagram into appropriate relations
+## Entities
+- Category
+- Product
+- Picture
+- Customer
+- Order
+- Coupon
+- Rating
 ## Attributes
 ### 1.Category
     - category_ID(PRIMARY KEY)
