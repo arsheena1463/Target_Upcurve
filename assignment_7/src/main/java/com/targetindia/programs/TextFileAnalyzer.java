@@ -28,7 +28,7 @@ public class TextFileAnalyzer {
             System.out.println(e.getMessage());
             System.exit(0);
         }
-        
+
         // adding the sentences to an array of length numberOfLines
         try ( FileInputStream file = new FileInputStream(filename); ){
              int ch;
@@ -53,16 +53,29 @@ public class TextFileAnalyzer {
              }
 
              //printing the longest line in the file
-            System.out.println("\nLongest line:");
-            System.out.println(findLongestLine(fileContent));
+            String longestLine = findLongestLine(fileContent);
+             int lineNumber = 0;
+             for( int i=0; i < fileContent.length; i++){
+                 if(longestLine.equalsIgnoreCase(fileContent[i])){
+                     lineNumber = i+1;
+                 }
+             }
+            System.out.println("\nLongest line: ");
+            System.out.printf("Line %d: %s",lineNumber,longestLine);
 
             //printing the shortest line in the file
-            System.out.println("\nShortest line: ");
-            System.out.println(findShortestLine(fileContent));
+            String shortestLine = findShortestLine(fileContent) ;
+            for( int i=0; i < fileContent.length; i++){
+                if(shortestLine.equalsIgnoreCase(fileContent[i])){
+                    lineNumber = i+1;
+                }
+            }
+            System.out.println("\n\nShortest line: ");
+            System.out.printf("Line %d: %s",lineNumber,shortestLine);
 
             //printing the word count for each line
             int[] wordCount = countWords(fileContent);
-            System.out.println("\nWord count for each line: ");
+            System.out.println("\n\nWord count for each line: ");
             for ( int i = 0; i < wordCount.length ; i++){
                 System.out.printf("Line %d: %d words\n",i+1, wordCount[i]);
             }
